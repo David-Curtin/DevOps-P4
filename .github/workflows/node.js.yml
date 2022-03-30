@@ -4,12 +4,26 @@
 name: Node.js CI
 
 on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
 jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}"
   build:
 
     runs-on: ubuntu-latest
